@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <style>
+     
+        #watch {
+            font-size: 50px;
+            text-align: center;
+            margin-top: 100px;
+        }
+        
+      
+        button {
+          padding: 12px 20px;
+          font-size: 18px;
+          font-weight: bold;
+          color: white;
+          background: linear-gradient(90deg, #00C9FF 0%, #0a54c2 100%);
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+      }
+
+    
+    button:hover {
+        background: linear-gradient(90deg, #0a54c2 0%, #00C9FF 100%);
+    }
+
+    @media (max-width: 600px) {
+      .main {
+          flex-direction: column; 
+          gap: 10px;
+      }
+  
+      button {
+          width: 80%;
+      }
+  }
+  .main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; 
+    margin-top: 20px; 
+}
+        
+    </style>
+</head>
+<body>
+    <h2 id="watch">00:00:00:000</h2>
+    <div class="main">
+
+      <button onclick="start()">Start</button>
+      <button onclick="pause()">Pause</button>
+      <button onclick="reset()">Reset</button>
+    </div>
+
+<script>
+  let h = 0, m = 0, s = 0, ms = 0;
+  let timer = false ;
+
+  function start() {
+    if (!timer) {
+      timer = true;
+      set = setInterval(() => {
+        ms += 10;
+        if (ms == 1000) {
+          ms = 0;
+          s++;
+        }
+        if (s == 60) {
+          s = 0;
+          m++;
+        }
+        if (m == 60) {
+          m = 0;
+          h++;
+        }
+        
+      
+        let h1 = h < 10 ? "0" + h : h;
+        let m1 = m < 10 ? "0" + m : m;
+        let s1 = s < 10 ? "0" + s : s;
+        let ms1 = ms < 10 ? "00" + ms : ms < 100 ? "0" + ms : ms;
+
+        document.getElementById("watch").innerText = `${h1}:${m1}:${s1}:${ms1}`;
+      }, 10);
+    }
+  }
+
+  function pause() {
+    clearInterval(set);
+    timer = false;
+  }
+
+  function reset() {
+    clearInterval(set);
+    timer = false;
+    h = m = s = ms = 0;
+    document.getElementById("watch").innerText = "00:00:00:000";
+  }
+</script>
+
+</body>
+</html>
